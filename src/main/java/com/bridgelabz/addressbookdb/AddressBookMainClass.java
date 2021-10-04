@@ -19,7 +19,7 @@ public class AddressBookMainClass {
 	private Map<String, AddressBook> addressBookSystem = new HashMap<>();
 
 	public static void main(String[] args) {
-		System.out.println("Welcome to Address Book Program\n");
+		System.out.println("Welcome to the Address Book Program\n");
 
 		addressbooks.addContacts();
 
