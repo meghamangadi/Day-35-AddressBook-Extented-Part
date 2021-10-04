@@ -31,7 +31,9 @@ public class AddressBookMainClass {
 		System.out.println(
 				"1 : Add new contact    2 : Edit contact  3 : Delete contact  4: Add Multiple Contacts 5: Display Contacts 6: Search Person 7: Person with City and State"
 						+ " 8: Count person by city and state 9: Sorted Person's by alphabetically in Address Book 10: Sorted Person's by alphabetically by City State And Zip Code"
-						+ "11: write the addressbook with persons contact into text file 14: Rerieve all the Entries from the DB 15: update the Contact Information DB ");
+						+ "11: write the addressbook with persons contact into text file 12: write into data csv  13:write into data json 14: Rerieve all the Entries from the DB 15: update the Contact Information DB"
+						+ " 16: Rerieve all the Entries from the Db by given date"
+						+ "17 : Retrieve number of Contacts in the Database by City or State  ");
 		int choice = sc.nextInt();
 		switch (choice) {
 		case 1:
@@ -174,7 +176,7 @@ public class AddressBookMainClass {
 			try {
 				db.retrieveAllData();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			addressbooks.addContacts();
@@ -184,7 +186,7 @@ public class AddressBookMainClass {
 			try {
 				dbupdate.updateDataByName();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			addressbooks.addContacts();
@@ -194,7 +196,17 @@ public class AddressBookMainClass {
 			try {
 				dbupdatebydate.getContactsInDatePeriod();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+
+				e.printStackTrace();
+			}
+			addressbooks.addContacts();
+			break;
+		case 17:
+			DataBaseOperation dbupdatebystate = new DataBaseOperation();
+			try {
+				dbupdatebystate.getNoOfContactsByState();
+			} catch (SQLException e) {
+
 				e.printStackTrace();
 			}
 			addressbooks.addContacts();
@@ -202,7 +214,7 @@ public class AddressBookMainClass {
 		default:
 			System.out.println("Please Enter correct choice");
 		}
-		
+
 	}
 
 	public void editContact(String findAddressBook, String name, String editFirstName, String editLastName,

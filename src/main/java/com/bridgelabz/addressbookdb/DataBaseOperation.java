@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
+
 import com.mysql.jdbc.Statement;
 import java.sql.PreparedStatement;
 
@@ -83,6 +85,25 @@ public class DataBaseOperation {
 			Statement statement = (Statement) con.createStatement();
 			ResultSet resultSet = statement.executeQuery(retrieveQuery);
 			displayResultSet(resultSet);
+		}
+	}
+
+	public void getNoOfContactsByState() throws SQLException {
+
+		Scanner sc = new Scanner(System.in);
+		Connection con = getConnection();
+		System.out.print("\nEnter State : ");
+		String state = sc.nextLine();
+
+		if (con != null) {
+			String retrieveQuery = "SELECT COUNT(*) AS 'count' FROM contacts JOIN addressbook ON addressbook.id = contacts.id WHERE state = ?";
+			PreparedStatement statement = con.prepareStatement(retrieveQuery);
+			statement.setString(1, state);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				int contactCount = resultSet.getInt("count");
+				System.out.println("\nNumber of contacts belongs to " + state + " : " + contactCount);
+			}
 		}
 	}
 
