@@ -1,9 +1,11 @@
 package com.bridgelabz.addressbookdb;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+ 
 import java.util.Scanner;
 
 import com.mysql.jdbc.Statement;
@@ -131,5 +133,52 @@ public class DataBaseOperation {
 					zip, date);
 			System.out.println(rowData + " \n ");
 		}
+	}
+	
+	
+
+	public void insertContact() throws SQLException {
+		
+		Connection con = getConnection();
+		try {
+			if(con != null) {
+				con.setAutoCommit(false);
+				
+				String insertQuery = "INSERT INTO addressbook (address_book) VALUES (?)";
+				PreparedStatement insertStatement = con.prepareStatement(insertQuery);
+				insertStatement.setString(1, "Other");
+				int rowInserted = insertStatement.executeUpdate();
+				
+				
+				insertQuery = "INSERT INTO contacts (id,firstName,lastName,address,city,state,phoneNumber,email,zip,date) VALUES (?,?,?,?,?,?,?,?,?,?)";
+				insertStatement = con.prepareStatement(insertQuery);
+				insertStatement.setInt(1, 1);
+				insertStatement.setString(2, "kittu");
+				insertStatement.setString(3, "Arabbi");
+				insertStatement.setString(4, "Vidyagiri");
+				insertStatement.setString(5, "bagalkot");
+				insertStatement.setString(6, "karnataka");
+				insertStatement.setInt(7, 919);
+				insertStatement.setString(8, "kittu@gmail.com");
+				insertStatement.setInt(9, 909);
+				insertStatement.setDate(10, new Date(2021-05-25));
+				rowInserted = insertStatement.executeUpdate();
+				
+				con.commit();
+				if(rowInserted > 0){
+					System.out.println("Contact Inserted");
+				}
+				con.setAutoCommit(true);
+			}
+			
+		}catch(SQLException sqlException) {
+			System.out.println("Insertion Rollbacked");
+			con.rollback();
+
+	    }finally {
+	    	if(con != null) {
+				con.close();
+	    	}
+	    }
 	}
 }

@@ -33,7 +33,7 @@ public class AddressBookMainClass {
 						+ " 8: Count person by city and state 9: Sorted Person's by alphabetically in Address Book 10: Sorted Person's by alphabetically by City State And Zip Code"
 						+ "11: write the addressbook with persons contact into text file 12: write into data csv  13:write into data json 14: Rerieve all the Entries from the DB 15: update the Contact Information DB"
 						+ " 16: Rerieve all the Entries from the Db by given date"
-						+ "17 : Retrieve number of Contacts in the Database by City or State  ");
+						+ "17 : Retrieve number of Contacts in the Database by City or State 18: insert contacts into data base ");
 		int choice = sc.nextInt();
 		switch (choice) {
 		case 1:
@@ -205,6 +205,16 @@ public class AddressBookMainClass {
 			DataBaseOperation dbupdatebystate = new DataBaseOperation();
 			try {
 				dbupdatebystate.getNoOfContactsByState();
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+			addressbooks.addContacts();
+			break;
+		case 18:
+			DataBaseOperation add = new DataBaseOperation();
+			try {
+				add.insertContact();
 			} catch (SQLException e) {
 
 				e.printStackTrace();
