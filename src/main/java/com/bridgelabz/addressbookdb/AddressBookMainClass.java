@@ -178,6 +178,7 @@ public class AddressBookMainClass {
 				e.printStackTrace();
 			}
 			addressbooks.addContacts();
+			break;
 		case 15:
 			DataBaseOperation dbupdate = new DataBaseOperation();
 			try {
@@ -187,10 +188,21 @@ public class AddressBookMainClass {
 				e.printStackTrace();
 			}
 			addressbooks.addContacts();
+			break;
+		case 16:
+			DataBaseOperation dbupdatebydate = new DataBaseOperation();
+			try {
+				dbupdatebydate.getContactsInDatePeriod();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			addressbooks.addContacts();
+			break;
 		default:
 			System.out.println("Please Enter correct choice");
 		}
-
+		
 	}
 
 	public void editContact(String findAddressBook, String name, String editFirstName, String editLastName,

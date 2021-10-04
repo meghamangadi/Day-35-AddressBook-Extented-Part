@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.mysql.jdbc.Statement;
 import java.sql.PreparedStatement;
+
 public class DataBaseOperation {
 
 	public static Connection getConnection() {
@@ -71,6 +72,43 @@ public class DataBaseOperation {
 			if (rowUpdated > 0) {
 				System.out.println("Contact Updated");
 			}
+		}
+	}
+
+	public void getContactsInDatePeriod() throws SQLException {
+
+		Connection con = getConnection();
+		if (con != null) {
+			String retrieveQuery = "SELECT * FROM contacts JOIN addressbook ON addressbook.id = contacts.id WHERE date BETWEEN CAST('2019-07-01' AS DATE) AND DATE(NOW());";
+			Statement statement = (Statement) con.createStatement();
+			ResultSet resultSet = statement.executeQuery(retrieveQuery);
+			displayResultSet(resultSet);
+		}
+	}
+
+	public void displayResultSet(ResultSet resultSet) throws SQLException {
+
+		System.out.println("\nContact retrieved..");
+		while (resultSet.next()) {
+
+			int addressBookId = resultSet.getInt("id");
+			String addressBookName = resultSet.getString("address_book");
+			int personId = resultSet.getInt("id");
+			String firstName = resultSet.getString("firstName");
+			String lastName = resultSet.getString("lastName");
+			String address = resultSet.getString("address");
+			String city = resultSet.getString("city");
+			String state = resultSet.getString("state");
+			int phoneNo = resultSet.getInt("phoneNumber");
+			String email = resultSet.getString("email");
+			int zip = resultSet.getInt("zip");
+			String date = resultSet.getDate("date").toString();
+
+			String rowData = String.format(
+					"\nAddressBook Id : %d \nAddressBook Name : %s \nPerson Id : %d \nFirst Name : %s  \nLast Name : %s \nAddress : %s \nCity : %s \nState : %s \nPhone Number : %s \nE-mail : %s \nZip : %d \nDate : %s",
+					addressBookId, addressBookName, personId, firstName, lastName, address, city, state, phoneNo, email,
+					zip, date);
+			System.out.println(rowData + " \n ");
 		}
 	}
 }
