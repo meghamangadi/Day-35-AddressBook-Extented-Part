@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.mysql.jdbc.Statement;
-
+import java.sql.PreparedStatement;
 public class DataBaseOperation {
 
 	public static Connection getConnection() {
@@ -14,8 +14,8 @@ public class DataBaseOperation {
 		String password = "root";
 		Connection connection = null;
 		try {
-			//DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			 
+			// DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+
 			connection = DriverManager.getConnection(url, userName, password);
 			System.out.println("Connection established successfully..!!");
 		} catch (SQLException e) {
@@ -56,4 +56,21 @@ public class DataBaseOperation {
 		}
 	}
 
+	public void updateDataByName() throws SQLException {
+
+		Connection con = getConnection();
+		// Update data with salary by person's name
+		if (con != null) {
+
+			String updateQuery = "UPDATE contacts SET address = ? WHERE firstName = ?";
+			PreparedStatement updateStatement = con.prepareStatement(updateQuery);
+			updateStatement.setString(1, "Navanagar");
+			updateStatement.setString(2, "megha");
+
+			int rowUpdated = updateStatement.executeUpdate();
+			if (rowUpdated > 0) {
+				System.out.println("Contact Updated");
+			}
+		}
+	}
 }

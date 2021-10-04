@@ -31,7 +31,7 @@ public class AddressBookMainClass {
 		System.out.println(
 				"1 : Add new contact    2 : Edit contact  3 : Delete contact  4: Add Multiple Contacts 5: Display Contacts 6: Search Person 7: Person with City and State"
 						+ " 8: Count person by city and state 9: Sorted Person's by alphabetically in Address Book 10: Sorted Person's by alphabetically by City State And Zip Code"
-						+ "11: write the addressbook with persons contact into text file 14: Rerieve all the Entries from the DB ");
+						+ "11: write the addressbook with persons contact into text file 14: Rerieve all the Entries from the DB 15: update the Contact Information DB ");
 		int choice = sc.nextInt();
 		switch (choice) {
 		case 1:
@@ -173,6 +173,15 @@ public class AddressBookMainClass {
 			DataBaseOperation db = new DataBaseOperation();
 			try {
 				db.retrieveAllData();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			addressbooks.addContacts();
+		case 15:
+			DataBaseOperation dbupdate = new DataBaseOperation();
+			try {
+				dbupdate.updateDataByName();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
